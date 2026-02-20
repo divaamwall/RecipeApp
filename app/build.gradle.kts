@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.diva.recipeapp"
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.diva.recipeapp"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 

@@ -12,49 +12,42 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Grant execute permission to gradlew
+          command: chmod +x gradlew
+
       - restore_cache:
           keys:
             - gradle-v1-
 
       - run:
-          name: Grant execute permission to gradlew
-          command: chmod +x gradlew
-
-      - run:
           name: Download dependencies
           command: ./gradlew androidDependencies
 
+      # =========================
       # UNIT TESTS
-      - android/run-tests:
-          test-command: ./gradlew lint testDebug
+      # =========================
+      - run:
+          name: Run unit tests
+          command: ./gradlew lint testDebugUnitTest
 
       - store_test_results:
-          path: app/build/test-results/testDebugUnitTest
+          path: app/build/test-results
 
       - store_artifacts:
           path: app/build/reports
           destination: reports
 
+      # =========================
       # BUILD DEBUG APK
+      # =========================
       - run:
-          name: Assemble debug APK
+          name: Assemble Debug APK
           command: ./gradlew assembleDebug
 
       - store_artifacts:
           path: app/build/outputs/apk/debug
-          destination: artifact-file
-
-      # INSTRUMENTATION TEST
-      - android/start-emulator-and-run-tests:
-          test-command: ./gradlew connectedDebugAndroidTest
-          system-image: system-images;android-30;google_apis;x86
-
-      - store_test_results:
-          path: app/build/outputs/androidTest-results/connected
-
-      - store_artifacts:
-          path: app/build/reports/androidTests
-          destination: android-test-reports
+          destination: debug-apk
 
       - save_cache:
           key: gradle-v1-{{ epoch }}
@@ -63,6 +56,6 @@ jobs:
             - ~/.android
 
 workflows:
-  sample:
+  build:
     jobs:
       - build-and-test

@@ -19,3 +19,33 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Hilt
+-keep class dagger.hilt.** { *; }
+-keep @dagger.hilt.android.AndroidEntryPoint class * { *; }
+-keepnames @dagger.hilt.android.AndroidEntryPoint class *
+
+# Retrofit & Gson
+-keep class com.diva.recipeapp.core.data.source.remote.response.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class retrofit2.** { *; }
+-keep class com.google.gson.** { *; }
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+
+# Room
+-keep class * extends androidx.room.RoomDatabase
+-keep @androidx.room.Entity class *
+
+# Domain Model (Parcelable)
+-keep class com.diva.recipeapp.core.domain.model.** { *; }
+-keep class com.diva.recipeapp.core.data.source.local.entity.** { *; }
+
+# OkHttp
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }
+
+# Coroutines
+-keep class kotlinx.coroutines.** { *; }

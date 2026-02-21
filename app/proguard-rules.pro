@@ -49,3 +49,5 @@
 
 # Coroutines
 -keep class kotlinx.coroutines.** { *; }
+
+-keep class net.sqlcipher.database.** { *; }
